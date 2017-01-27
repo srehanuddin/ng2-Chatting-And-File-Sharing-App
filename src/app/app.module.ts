@@ -23,6 +23,7 @@ import { FeedbackService } from './services/feedback.service';
 import { LocationService } from './services/location.service';
 import { LoggedInGuardService } from './services/logged-in-guard.service';
 import { AccountsService } from './services/accounts.service';
+import { ChatService } from './services/chat.service';
 //import { ResumesService } from './services/resumes.service';
 import { LoginComponent } from './components/login/login.component';
 //import { CompaniesComponent } from './components/companies/companies.component';
@@ -101,7 +102,8 @@ export const appRoutes: Routes = [
     AccountsService,
     LoggedInGuardService,
     LocationService,
-    FeedbackService
+    FeedbackService,
+    ChatService
   ],
   bootstrap: [AppComponent]
 })

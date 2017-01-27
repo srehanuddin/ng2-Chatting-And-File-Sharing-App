@@ -2,21 +2,23 @@
   <div class="usersSection">
 
     <md-list>
-      <md-list-item *ngFor="let u of accountsArr">{{u.FirstName}} {{u.LastName}}</md-list-item>
+      <md-list-item *ngFor="let u of accountsArr" [style.display]="u.uid == user.uid ? 'none' : ''" (click)="selectUser(u)">
+        {{u.FirstName}} {{u.LastName}}
+      </md-list-item>
       
     </md-list>
 
   </div>
   <div class="chatSection" >
     
-      <md-card class="example-card" >
+      <md-card class="example-card" *ngIf="selectedUser" >
         <md-card-header>
-          <md-card-title><h2>Login</h2></md-card-title>
+          <md-card-title><h2>{{selectedUser.FirstName}} {{selectedUser.LastName}}</h2></md-card-title>
         </md-card-header>
         <md-card-content class="md-card-content" >
 
           <md-list>
-            <md-list-item style="height: auto;">
+            <!--<md-list-item style="height: auto;">
               <div class="chatToMeMain">
                 <div class="chatToMe">Hello Hello Hello Hello Hello HelloHelloHello HelloHello Hellov HelloHello Hello Hello</div>
               </div>
@@ -25,19 +27,29 @@
               <div class="chatFromMeMain">
                 <div class="chatFromMe">Hello Hello Hello Hello Hello HelloHelloHello HelloHello Hellov HelloHello Hello Hello</div>
               </div>
+            </md-list-item>-->
+            <md-list-item *ngFor="let msg of messages;" style="height: auto;">
+              <div class="chatToMeMain" [ngClass]="{chatToMeMain: msg.To == user.uid, chatFromMeMain: msg.To != user.uid}" >
+                <div class="chatToMe" *ngIf="msg.Text" [ngClass]="{chatToMe: msg.To == user.uid, chatFromMe: msg.To != user.uid}">
+                  {{msg.Text}}
+                </div>
+                <div class="chatToMe" *ngIf="msg.URL" [ngClass]="{chatToMe: msg.To == user.uid, chatFromMe: msg.To != user.uid}">
+                  <a href='{{msg.URL}}' target="_blank" >File Received</a>
+                </div>
+              </div>
             </md-list-item>
-            
+
           </md-list>
 
         </md-card-content>
         <md-card-actions class="padding-bottom-10">
           <md-input-container class="chatTextCont">
-            <input md-input placeholder="What's in your mind'" >
+            <input md-input placeholder="What's in your mind'" #message >
           </md-input-container>
           <span class="example-spacer"></span>
           <div class="chatButtonsCont">
-            <button md-button md-raised-button color="primary" type="submit">File</button>
-            <button md-button md-raised-button color="primary" type="submit">Send</button>
+            <button md-button md-raised-button color="primary" type="button" >File</button>
+            <button md-button md-raised-button color="primary" type="button" (click)="sendMessage(message)">Send</button>
           </div>
           
         </md-card-actions>
