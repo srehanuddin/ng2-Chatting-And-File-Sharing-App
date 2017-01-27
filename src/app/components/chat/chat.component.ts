@@ -22,6 +22,7 @@ export class ChatComponent implements OnInit {
   messages : ChatModel[];
   progress: number = 0;
   isFileUploading = false;
+  message : String;
 
   constructor(
     private accountService : AccountsService, 
@@ -71,18 +72,18 @@ export class ChatComponent implements OnInit {
     this.messgesSubscribe();
   }
 
-  sendMessage(message){
-    if(message.value){
+  sendMessage(){
+    if(this.message){
 
       var Obj : ChatModel = {
-        Text : message.value,
+        Text : this.message,
         To : this.selectedUser.uid,
         From : this.user.uid,
         TimeStamp : Date.now(),
         IsRead : false
       }
       this.chatService.addMessages(Obj);
-      message.value = "";
+      this.message = "";
     }
   }
 
