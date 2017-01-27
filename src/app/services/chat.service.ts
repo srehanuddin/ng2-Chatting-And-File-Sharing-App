@@ -3,14 +3,22 @@ import { AngularFire, FirebaseObjectObservable, FirebaseListObservable } from 'a
 import { Subject } from 'rxjs';
 import UserModel from "../models/user.model";
 import ChatModel from "../models/chat.model";
+import * as firebase from 'firebase';
 
 @Injectable()
 export class ChatService {
 
   messages: FirebaseListObservable<ChatModel[]>;
+  storage;
+  storageRef;
+  filesRef;
 
   constructor(public af: AngularFire) {
     //this.feedbacks = this.af.database.list('/messages/');
+
+    this.storage = firebase.storage();
+    this.storageRef = this.storage.ref();
+    this.filesRef = this.storageRef.child('files');
   }
 
   fetchMessages(key){

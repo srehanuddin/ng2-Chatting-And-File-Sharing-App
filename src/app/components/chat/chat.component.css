@@ -78,7 +78,29 @@ figure {
     width: calc(100% - 220px);
 }
 
+.FileProgressCont {
+    width: calc(100% - 220px);
+    float: left;
+    text-align: center
+}
+
 .md-list-item {
     height: auto !important;
     min-height: 48px;
+}
+
+.userListItem:hover {
+    background: blueviolet;
+}
+.userListItemActive {
+    background: blueviolet;
+}
+
+.fileControl {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    bottom: 0;
+    opacity: 0;
 }

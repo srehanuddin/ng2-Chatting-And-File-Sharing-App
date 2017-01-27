@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "ng2realtimeparkingbooking"
+    "default": "ng2realtimeparkingbooking",
+    "staging": "ng2-chattingwithimagesharing"
   }
 }

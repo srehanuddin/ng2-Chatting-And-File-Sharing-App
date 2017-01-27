@@ -2,7 +2,7 @@
   <div class="usersSection">
 
     <md-list>
-      <md-list-item *ngFor="let u of accountsArr" [style.display]="u.uid == user.uid ? 'none' : ''" (click)="selectUser(u)">
+      <md-list-item *ngFor="let u of accountsArr" class="userListItem" [ngClass]="{userListItemActive : selectedUser && u.uid == selectedUser.uid }" [style.display]="u.uid == user.uid ? 'none' : ''" (click)="selectUser(u)">
         {{u.FirstName}} {{u.LastName}}
       </md-list-item>
       
@@ -33,8 +33,8 @@
                 <div class="chatToMe" *ngIf="msg.Text" [ngClass]="{chatToMe: msg.To == user.uid, chatFromMe: msg.To != user.uid}">
                   {{msg.Text}}
                 </div>
-                <div class="chatToMe" *ngIf="msg.URL" [ngClass]="{chatToMe: msg.To == user.uid, chatFromMe: msg.To != user.uid}">
-                  <a href='{{msg.URL}}' target="_blank" >File Received</a>
+                <div class="chatToMe" *ngIf="msg.Url" [ngClass]="{chatToMe: msg.To == user.uid, chatFromMe: msg.To != user.uid}">
+                  <a href='{{msg.Url}}' target="_blank" >File</a>
                 </div>
               </div>
             </md-list-item>
@@ -43,12 +43,24 @@
 
         </md-card-content>
         <md-card-actions class="padding-bottom-10">
-          <md-input-container class="chatTextCont">
+          <md-input-container class="chatTextCont" *ngIf="!isFileUploading">
             <input md-input placeholder="What's in your mind'" #message >
           </md-input-container>
+          <label class="FileProgressCont" *ngIf="isFileUploading">
+            Upload - {{progress}}%
+            <md-progress-bar style="width: 95%; float: left;"
+                class="app-progress"
+                color="accent"
+                mode="determinate"
+                [value]="progress"
+                aria-label="Determinate progress-bar example"></md-progress-bar>
+          </label>
           <span class="example-spacer"></span>
-          <div class="chatButtonsCont">
-            <button md-button md-raised-button color="primary" type="button" >File</button>
+          <div class="chatButtonsCont" >
+            <div md-button md-raised-button color="primary" style="width: 90px" type="file" >
+              File
+              <input type="file" class="fileControl" (change)="fileChanged($event)" >
+            </div>
             <button md-button md-raised-button color="primary" type="button" (click)="sendMessage(message)">Send</button>
           </div>
           

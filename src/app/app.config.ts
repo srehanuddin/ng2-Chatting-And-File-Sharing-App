@@ -5,7 +5,7 @@ export const firebaseConfig = {
   apiKey: 'AIzaSyCJhzcObPNZYVEbiiWEgzKOlUPF_n-U6zc',
   authDomain: 'ng2-chattingwithimagesharing.firebaseio.com',
   databaseURL: 'https://ng2-chattingwithimagesharing.firebaseio.com',
-  storageBucket: '<your-storage-bucket>',
+  storageBucket: 'gs://ng2-chattingwithimagesharing.appspot.com',
   messagingSenderId: '<your-messaging-sender-id>'
 };
 
