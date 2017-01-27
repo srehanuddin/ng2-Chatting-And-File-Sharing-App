@@ -1,0 +1,34 @@
+<md-sidenav-layout [class.m2app-dark]="isDarkTheme">
+
+    <!-- Header -->
+    <md-toolbar color="primary">
+        <button class="app-icon-button" *ngIf="(user && user.uid)" (click)="sidenav.toggle()">
+            <i class="material-icons app-toolbar-menu">menu</i>
+        </button>
+
+        One-to-One Chatting & Image Sharing System
+
+        <span class="example-spacer"></span>
+        <span *ngIf="(user && user.uid)">Welcome {{(user && user.FirstName || "")}}</span>
+        <button md-button [routerLink]="['/Login']" *ngIf="!(user && user.uid)" >Login</button>
+        <button md-button [routerLink]="['/Register']" *ngIf="!(user && user.uid)" >Register</button>
+        <button md-button [routerLink]="['/Chat']" *ngIf="(user && user.uid)" >Chat</button>
+        <button class="app-icon-button" md-icon-button [mdMenuTriggerFor]="menu" *ngIf="(user && user.uid)">
+            <md-icon>more_vert</md-icon>
+        </button>
+        <md-menu #menu="mdMenu">
+            <button md-menu-item (click)="logout()">
+                <md-icon>settings-power</md-icon>
+                <span>Logout</span>
+            </button>
+        </md-menu>
+    </md-toolbar>
+    <!-- Header -->
+    
+
+    <div >
+        <router-outlet></router-outlet>
+        <!-- Routed views go here -->
+    </div>
+
+</md-sidenav-layout>

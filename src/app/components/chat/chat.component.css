@@ -1,0 +1,84 @@
+md-grid-tile {
+    margin-top : 0px !important;
+    padding-top : 0px !important;
+    height: calc(100vh - 65px);
+}
+figure {
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    overflow: scroll !important;
+}
+
+.md-grid-list {
+    height: calc(100vh - 65px) !important;
+    padding-bottom: 0px !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.chatToMe {
+    color: blue;
+    background: lightcyan;
+    border-radius: 10px;
+    padding: 10px 20px;
+    float: left;
+}
+
+.chatFromMe {
+    color: black;
+    background: #fdff95;
+    border-radius: 10px;
+    padding: 10px 20px;
+    float: right;
+}
+
+.chatSection {
+    width: 75%; 
+    position: absolute; 
+    right: 0; 
+    height: calc(100vh - 65px); 
+}
+
+.usersSection {
+    width: 25%; 
+    position: absolute; 
+    left: 0; 
+    height: calc(100vh - 65px); 
+    overflow-y: scroll;
+}
+
+.example-card {
+    height: calc(100% - 50px);
+}
+
+.md-card-content {
+    height: calc(100% - 105px); 
+    overflow-y: scroll; 
+    overflow-x: hidden;
+}
+
+.chatToMeMain {
+    width: 100%; 
+    padding: 5px;
+}
+
+.chatFromMeMain {
+    width: 100%; 
+    padding: 5px;
+}
+
+.chatButtonsCont {
+    float: right; 
+    width: 200px; 
+    text-align: right;
+    margin-right: 20px;
+}
+
+.chatTextCont {
+    width: calc(100% - 220px);
+}
+
+.md-list-item {
+    height: auto !important;
+    min-height: 48px;
+}

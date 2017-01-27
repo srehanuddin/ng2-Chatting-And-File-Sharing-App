@@ -1,0 +1,49 @@
+
+<md-card class="example-card" >
+  <md-card-content *ngIf="locationDetail?.Location">
+
+    <h2>{{locationDetail?.Location}}</h2>
+    <p>
+      Number of Parking Slots : {{locationDetail?.NumberOfSlots}}
+    </p>
+
+    <form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmitBooking(myForm.value)" *ngIf="locationDetail?.$key && isDialogShow" >
+
+      <md-card class="example-card">
+        <md-card-header>
+          <md-card-title><h2>Reserve Parking Slot : {{selectedSlot}}</h2></md-card-title>
+        </md-card-header>
+        <md-card-content>
+
+          <p *ngIf="BookingErrorMessage" class="error-message">{{BookingErrorMessage}}</p>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="Start Date" type="date" [formControl]="myForm.controls['StartDate']"> 
+            <md-hint *ngIf="myForm.controls['StartDate'].touched && myForm.controls['StartDate'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input md-input placeholder="Start Time" type="time" [formControl]="myForm.controls['StartTime']"> 
+            <md-hint *ngIf="myForm.controls['StartTime'].touched && myForm.controls['StartTime'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+
+          <md-input-container class="example-full-width">
+            <input type="number" min="1" max="24" md-input placeholder="Hours" [formControl]="myForm.controls['Hours']"> 
+            <md-hint *ngIf="myForm.controls['Hours'].touched && myForm.controls['Hours'].hasError('required')" [ngStyle]="{'color': 'red'}" align="start">Required</md-hint>
+          </md-input-container>
+      
+        </md-card-content>
+        <md-card-actions class="text-right padding-right-20 padding-bottom-10">
+          <span class="example-spacer"></span>
+          <button md-button md-raised-button color="primary" type="submit">Add</button>
+        </md-card-actions>
+      </md-card>
+
+    </form>
+    
+    <p *ngFor="let num of counter(locationDetail?.NumberOfSlots); let i = index" style="display: inline-block; padding: 10px" >
+      <button md-button md-raised-button [color]="returnBtnColor(locationDetail?.$key, i)" (click)="navigateReservation(locationDetail?.$key, i)" >Slot : {{i}}</button>
+    </p>
+  
+  </md-card-content>
+</md-card>
