@@ -20,6 +20,7 @@ export class ChatComponent implements OnInit {
   user : UserModel;
   selectedUser : UserModel;
   messages : ChatModel[];
+  messagesNewArr : ChatModel[];
   progress: number = 0;
   isFileUploading = false;
   message : String;
@@ -42,6 +43,27 @@ export class ChatComponent implements OnInit {
         this.router.navigate(['/Login']);
         return;
       }
+
+      this.chatService.messagesNew.subscribe((messages : ChatModel[]) => {
+        console.log("New Messages : ", messages)
+        if(!this.selectedUser){
+          this.messagesNewArr = messages;
+        } else {
+          let self = this;
+          this.messagesNewArr = messages;
+          for(var i = 0; i < this.messagesNewArr.length; i++){
+            if(this.messagesNewArr[i].From == this.selectedUser.uid){
+              let k = this.messagesNewArr[i].$key;
+              (function(k){
+                setTimeout(function(){
+                  self.chatService.deleteNewMessages(k);
+                }, 300);     
+              })(k);        
+            }
+          }
+
+        }
+      });
     });
 
     this.accounts.subscribe((data : UserModel[]) => {
@@ -52,10 +74,23 @@ export class ChatComponent implements OnInit {
   }
 
   messgesSubscribe(){
-      this.chatService.messages.subscribe(data => {
-        console.log("data", data);
-        this.messages = data;
-      })
+    this.chatService.messages.subscribe(data => {
+      console.log("data", data);
+      this.messages = data;
+      var objDiv = document.getElementById("chatArea");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    })
+  }
+
+  newMessagesCounter(u : UserModel){
+    var counter = null;
+    for(var i = 0; i < this.messagesNewArr.length; i++){
+      if(this.messagesNewArr[i].From == u.uid){
+        counter = counter || 0;
+        counter++;
+      }
+    }
+    return counter;
   }
 
   selectUser(u : UserModel){
@@ -70,6 +105,19 @@ export class ChatComponent implements OnInit {
     let msgKey = this.chatService.getMessageKey(key1, key2);
     this.chatService.fetchMessages(msgKey);
     this.messgesSubscribe();
+
+    let self = this;
+    for(var i = 0; i < this.messagesNewArr.length; i++){
+      if(this.messagesNewArr[i].From == u.uid){
+        let k = this.messagesNewArr[i].$key;
+        (function(k){
+          setTimeout(function(){
+            self.chatService.deleteNewMessages(k);
+          }, 300);     
+        })(k);        
+      }
+    }
+
   }
 
   sendMessage(){
@@ -84,8 +132,11 @@ export class ChatComponent implements OnInit {
       }
       this.chatService.addMessages(Obj);
       this.message = "";
+      var objDiv = document.getElementById("chatArea");
+      objDiv.scrollTop = objDiv.scrollHeight;
     }
   }
+
 
   fileChanged(event){
 

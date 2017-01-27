@@ -3,7 +3,7 @@
 
     <md-list>
       <md-list-item *ngFor="let u of accountsArr" class="userListItem" [ngClass]="{userListItemActive : selectedUser && u.uid == selectedUser.uid }" [style.display]="u.uid == user.uid ? 'none' : ''" (click)="selectUser(u)">
-        {{u.FirstName}} {{u.LastName}}
+        {{u.FirstName}} {{u.LastName}} <span class="counter" *ngIf="newMessagesCounter(u)" >{{newMessagesCounter(u)}}</span>
       </md-list-item>
       
     </md-list>
@@ -15,7 +15,7 @@
         <md-card-header>
           <md-card-title><h2>{{selectedUser.FirstName}} {{selectedUser.LastName}}</h2></md-card-title>
         </md-card-header>
-        <md-card-content class="md-card-content" >
+        <md-card-content class="md-card-content" id="chatArea" >
 
           <md-list>
             <!--<md-list-item style="height: auto;">

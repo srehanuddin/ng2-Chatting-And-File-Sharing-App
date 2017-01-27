@@ -87,6 +87,11 @@ figure {
 .md-list-item {
     height: auto !important;
     min-height: 48px;
+    position: relative !important;
+}
+
+.userListItem {
+    position: relative !important;
 }
 
 .userListItem:hover {
@@ -103,4 +108,15 @@ figure {
     width: 100%;
     bottom: 0;
     opacity: 0;
+}
+
+.counter {
+    position: absolute;
+    right: 20px;
+    top: 5px;
+    color: white;
+    background: red;
+    padding: 10px;
+    border-radius: 15px;
+    font-weight: bold;
 }

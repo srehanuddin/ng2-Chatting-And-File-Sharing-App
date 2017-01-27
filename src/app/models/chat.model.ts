@@ -5,5 +5,6 @@ interface ChatModel {
     To : String,
     TimeStamp : Number,
     IsRead : Boolean
+    $key? : string
 }
 export default ChatModel;

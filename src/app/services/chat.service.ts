@@ -4,21 +4,39 @@ import { Subject } from 'rxjs';
 import UserModel from "../models/user.model";
 import ChatModel from "../models/chat.model";
 import * as firebase from 'firebase';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class ChatService {
 
   messages: FirebaseListObservable<ChatModel[]>;
+  messagesNew: FirebaseListObservable<ChatModel[]>;
   storage;
   storageRef;
   filesRef;
+  user : UserModel;
 
-  constructor(public af: AngularFire) {
+  constructor(public af: AngularFire, private store: Store<UserModel>) {
     //this.feedbacks = this.af.database.list('/messages/');
 
     this.storage = firebase.storage();
     this.storageRef = this.storage.ref();
     this.filesRef = this.storageRef.child('files');
+
+    store.select('appStore').subscribe((data : UserModel) => {
+      this.user = data;
+      
+      if(data && data.uid){
+        
+        this.messagesNew = this.af.database.list('/messages-new', {
+          query: {
+            orderByChild: 'To',
+            equalTo: data.uid
+          }
+        });
+
+      }
+    });
   }
 
   fetchMessages(key){
@@ -34,8 +52,9 @@ export class ChatService {
   }
 
 
-  addMessages(job: ChatModel) {
-    this.messages.push(job);
+  addMessages(obj: ChatModel) {
+    this.messages.push(obj);
+    this.addNewMessages(obj);
   }
 
   deleteMessages(key: string) {    
@@ -46,15 +65,15 @@ export class ChatService {
     this.messages.update(key, obj);
   }
 
-  addNewMessages(job: ChatModel) {
-    this.messages.push(job);
+  addNewMessages(obj: ChatModel) {
+    this.messagesNew.push(obj);
   }
 
   deleteNewMessages(key: string) {    
-    this.messages.remove(key); 
+    this.messagesNew.remove(key); 
   }
 
   updateNewMessages(key: string, obj) {
-    this.messages.update(key, obj);
+    this.messagesNew.update(key, obj);
   }
 }
